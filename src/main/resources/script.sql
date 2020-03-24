@@ -1,0 +1,1 @@
+create table contact(cid int primary key auto_increment,first_name varchar(100),last_name varchar(100),email varchar(100),mobile varchar(12));
