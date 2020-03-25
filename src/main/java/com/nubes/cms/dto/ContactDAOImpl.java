@@ -21,8 +21,7 @@ public class ContactDAOImpl implements ContactDAO {
 
 	@Override
 	public List<Contact> getContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		return contactRepo.findAll();
 	}
 
 	@Override

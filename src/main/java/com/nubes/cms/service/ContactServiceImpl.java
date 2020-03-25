@@ -1,6 +1,7 @@
 package com.nubes.cms.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -25,17 +26,20 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public ContactDTO addContact(ContactDTO contactDTO) {
 		Assert.notNull(contactDTO, "Contact object can't be null");
-		Contact contact = modelMapper.map(contactDTO,Contact.class);
-	    contact = contactDAO.addContact(contact);
-	    log.info("Contact is added with id:{}",contact.getCid());
-	    contactDTO = modelMapper.map(contact,ContactDTO.class);
+		Contact contact = modelMapper.map(contactDTO, Contact.class);
+		contact = contactDAO.addContact(contact);
+		log.info("Contact is added with id:{}", contact.getCid());
+		contactDTO = modelMapper.map(contact, ContactDTO.class);
 		return contactDTO;
 	}
 
 	@Override
 	public List<ContactDTO> getContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contact> contacts = contactDAO.getContacts();
+		log.info("Total Contacts found in DB:{}", contacts.size());
+		List<ContactDTO> contactsList = contacts.stream().map(e -> modelMapper.map(e, ContactDTO.class))
+				.collect(Collectors.toList());
+		return contactsList;
 	}
 
 	@Override
